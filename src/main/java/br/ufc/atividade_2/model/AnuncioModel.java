@@ -2,9 +2,14 @@ package br.ufc.atividade_2.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,7 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class AnuncioModel {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="anuncio_generator")
+	@SequenceGenerator(name="anuncio_generator", sequenceName ="anuncio_seq", allocationSize=1)	
 	private int id;
 	private String titulo;
 	private String endereco;
@@ -25,6 +31,7 @@ public class AnuncioModel {
 	private String status;
 	
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name ="user_id")
 	@JsonIgnore
 	private UserModel userModel;

@@ -2,16 +2,21 @@ package br.ufc.atividade_2.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class UserModel {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="user_generator")
+	@SequenceGenerator(name="user_generator", sequenceName ="user_seq", allocationSize=1)
+	
 	private int id;
 	private String nome;
 	private String cpf;
